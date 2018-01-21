@@ -14,7 +14,6 @@ const secretKeys: SecretKeys = require("../secretKeys.json");
 export const qiitaItems = functions.https.onRequest((request, response) => {
   const { title, tag, code, body, user, likes, stocks } = request.body;
   const token = secretKeys.qiita.accessToken;
-  console.log({ token, title, tag, code, body, likes, stocks });
   const url = new URL("https://qiita.com/api/v2/items") as _URL;
   const conditions: string[] = [];
   if (title) {
@@ -48,8 +47,6 @@ export const qiitaItems = functions.https.onRequest((request, response) => {
       }
     })
     .then(res => {
-      console.log(res);
-      res.data;
       response.status(200).send(res.data);
     })
     .catch(e => {
