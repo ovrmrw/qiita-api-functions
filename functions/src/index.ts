@@ -47,7 +47,10 @@ export const qiitaItems = functions.https.onRequest((request, response) => {
       }
     })
     .then(res => {
-      response.status(200).send(res.data);
+      const filteredData = (res.data as Record<string, any>[]).filter(
+        record => !record.private
+      );
+      response.status(200).send(filteredData);
     })
     .catch(e => {
       console.error(e);
