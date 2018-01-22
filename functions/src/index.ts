@@ -1,4 +1,6 @@
 import * as functions from "firebase-functions";
+import * as express from "express";
+import * as cors from "cors";
 import axios from "axios";
 import { URL } from "whatwg-url";
 import { URL as _URL } from "url";
@@ -11,7 +13,10 @@ interface SecretKeys {
 
 const secretKeys: SecretKeys = require("../secretKeys.json");
 
-export const qiitaItems = functions.https.onRequest((request, response) => {
+const app = express();
+app.use(cors({ origin: true })); // http://localhost:****/から叩くにはこの設定が必要。
+
+app.post("/items", (request, response) => {
   const { title, tag, code, body, user, likes, stocks } = request.body;
   const token = secretKeys.qiita.accessToken;
   const url = new URL("https://qiita.com/api/v2/items") as _URL;
@@ -57,3 +62,5 @@ export const qiitaItems = functions.https.onRequest((request, response) => {
       response.status(500).send("Qiita Request Error");
     });
 });
+
+export const qiitaApi = functions.https.onRequest(app);
