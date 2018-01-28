@@ -4,7 +4,7 @@ This repository is just for checking Qiita API.
 
 ## API
 
-url: `https://us-central1-qiita-api-functions.cloudfunctions.net/qiitaApi/items`
+url: `https://us-central1-qiita-api-functions.cloudfunctions.net/qiitaApiItems`
 
 method: POST
 
